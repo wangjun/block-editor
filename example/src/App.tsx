@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 
-import { ExampleComponent } from 'block-editor'
-import 'block-editor/dist/index.css'
+import { ExampleComponent } from 'block-editor';
+import 'block-editor/dist/index.css';
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
-}
+  return <ExampleComponent text="Hey look! Hello World Works!" />
+};
 
-export default App
+export default App;

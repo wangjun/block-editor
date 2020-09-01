@@ -1,6 +1,6 @@
 {
-  "name": "block-editor",
-  "version": "1.0.0",
+  "name": "@pinpt/block-editor",
+  "version": "0.0.1",
   "description": "A Notion-like notebook editor used at Pinpoint",
   "author": "rblalock",
   "license": "APACHE",

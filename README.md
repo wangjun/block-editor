@@ -1,30 +1,31 @@
-# block-editor
+# Pinpoint Block Editor
 
 > A Notion-like notebook editor used at Pinpoint
-
-[![NPM](https://img.shields.io/npm/v/block-editor.svg)](https://www.npmjs.com/package/block-editor) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save block-editor
+npm install --save @pinpt/block-editor
 ```
 
-## Usage
+## Development
 
-```tsx
-import React, { Component } from 'react'
+It's recommended to open up two tabs in terminal: one for building the library, one for running the examples.
 
-import MyComponent from 'block-editor'
-import 'block-editor/dist/index.css'
+**This will build your bundle as you change files (rollup with watch):**
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
-}
+```bash
+npm start
 ```
+
+**`cd` in to `examples` and start the react dev server (CRA app):**
+
+```bash
+npm start
+```
+
+Now as you make changes, you will see them reflected in this sample app.
 
 ## License
 
-APACHE © [rblalock](https://github.com/rblalock)
+APACHE 2.0 - Pinpoint, Inc.
