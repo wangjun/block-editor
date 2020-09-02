@@ -18643,12 +18643,16 @@ video {
   animation: bounce 1s infinite;
 }
 
-.editor-block .block-handle {
+.block-editor-block .block-handle {
   opacity: 0;
 }
 
-.editor-block:hover .block-handle {
+.block-editor-block:hover .block-handle {
   opacity: 1;
+}
+
+.block-editor-block.is-dragging > [data-rbd-draggable-context-id] {
+  background-color: #fff;
 }
 
 @media (min-width: 640px) {
@@ -90798,4 +90802,3 @@ video {
     animation: bounce 1s infinite;
   }
 }
-

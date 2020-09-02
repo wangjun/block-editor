@@ -6,8 +6,8 @@ interface SimpleBlockProps extends IBlock {
 }
 export default (props: SimpleBlockProps) => {
 	return (
-		<>
+		<div>
 			{props.data}
-		</>
+		</div>
 	);
 };

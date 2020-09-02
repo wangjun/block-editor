@@ -56,7 +56,7 @@ const Presentation = () => {
 			<BlockEditorWrapper onDragEnd={dragEnd}>
 				{blocks?.map((block, index) => (
 					<Block
-						className="editor-block flex items-center p-2 rounded border border-transparent hover:border-gray-300"
+						className="flex items-center p-2 rounded border border-transparent hover:border-gray-300"
 						dragHandle={(<DragHandle />)}
 						key={block.id}
 						block={block}

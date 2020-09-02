@@ -29,7 +29,8 @@ export const BlockEditorWrapper = (props: BlockEditorWrapperProps) => {
 			<Droppable droppableId={props.droppableId || 'block-editor'}>
 				{provided => (
 					<div
-						ref={provided.innerRef} {...provided.droppableProps}
+						ref={provided.innerRef}
+						{...provided.droppableProps}
 						className={['block-editor-wrapper', props.className].join(' ')}
 					>
 						{props.children}
@@ -53,9 +54,18 @@ interface BlockProps {
 }
 export const Block = (props: BlockProps) => {
 	return (
-		<Draggable draggableId={props.block.id} index={props.index}>
-			{provided => (
-				<div className={['block-editor-block', props.className].join(' ')}>
+		<Draggable key={props.block.id} draggableId={props.block.id} index={props.index}>
+			{(provided, snapshot) => (
+				<div
+					className={
+						[
+							'block-editor-block',
+							snapshot.isDragging && 'is-dragging',
+							snapshot.draggingOver && 'is-dragging-over',
+							props.className
+						].join(' ')
+					}
+				>
 					<div {...provided.dragHandleProps}>
 						{props.dragHandle}
 					</div>
