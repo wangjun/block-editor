@@ -1,11 +1,10 @@
-import * as React from 'react';
+import * as BlockEditorContext from './BlockEditorContext';
 
-import styles from './styles.module.css';
-
-interface Props {
-	text: string;
+export default {
+	Provider: BlockEditorContext.BlockEditorProvider,
+	Context: BlockEditorContext.BlockEditorContext,
+	Consumer: BlockEditorContext.BlockEditorContext.Consumer,
 }
 
-export const ExampleComponent = ({ text }: Props) => {
-	return <div className={styles.test}>Example Component: {text}</div>;
-};
+export { useBlockEditor } from './hooks';
+export { BlockEditorWrapper, Block } from './components';
