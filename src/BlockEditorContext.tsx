@@ -27,7 +27,7 @@ export const BlockEditorProvider = (props: BlockEditorProviderProps) => {
 
 	return (
 		<BlockEditorContext.Provider value={{
-			blocks: blocks,
+			blocks,
 			reorder
 		}}>
 			{props.children}
