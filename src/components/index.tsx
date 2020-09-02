@@ -51,8 +51,16 @@ interface BlockProps {
 	block: IBlock;
 	index: number;
 	dragHandle: JSX.Element;
+	onEdit: (block: IBlock) => void;
 }
 export const Block = (props: BlockProps) => {
+	const toggleEditing = () => {
+		// Only toggle if not already editing
+		if (!props.block.editing) {
+			props.onEdit(props.block);
+		}
+	};
+
 	return (
 		<Draggable key={props.block.id} draggableId={props.block.id} index={props.index}>
 			{(provided, snapshot) => (
@@ -72,6 +80,9 @@ export const Block = (props: BlockProps) => {
 					<div
 						ref={provided.innerRef}
 						{...provided.draggableProps}
+						onClick={toggleEditing}
+						role="button"
+						tabIndex={-1}
 					>
 						{props.children}
 					</div>

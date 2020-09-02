@@ -9,3 +9,4 @@ export default {
 export { useBlockEditor } from './hooks';
 export { BlockEditorWrapper, Block } from './components';
 export * as util from './util';
+export * as interfaces from './interfaces';
