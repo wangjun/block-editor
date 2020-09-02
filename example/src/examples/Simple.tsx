@@ -30,9 +30,10 @@ const dataPayload: IBlock[] = [
 export const SimpleExample = () => {
 	return (
 		<>
-			<BlockEditor.Provider value={{
-				blocks: dataPayload
-			}}>
+			<BlockEditor.Provider
+				blocks={dataPayload}
+				onReorder={(blocks, start, end) => console.log('onReorder', blocks, start, end)}
+			>
 				<Presentation />
 			</BlockEditor.Provider>
 		</>
@@ -40,18 +41,26 @@ export const SimpleExample = () => {
 };
 
 const Presentation = () => {
-	const { blocks } = useBlockEditor();
+	const { blocks, reorder } = useBlockEditor();
+
+	const dragEnd = (source: number, destination?: number) => {
+		if (destination !== undefined) {
+			reorder(source, destination);
+		}
+	};
 
 	return (
 		<div>
 			<h2 className="mb-5 border-b border-gray-200 text-2xl font-semibold">Simple Example</h2>
 
-			<BlockEditorWrapper>
-				{blocks?.map((block) => (
+			<BlockEditorWrapper onDragEnd={dragEnd}>
+				{blocks?.map((block, index) => (
 					<Block
 						className="editor-block flex items-center p-2 rounded border border-transparent hover:border-gray-300"
-						dragHandle={DragHandle}
+						dragHandle={(<DragHandle />)}
 						key={block.id}
+						block={block}
+						index={index}
 					>
 						{block.type === 'html' ? (
 							<HTMLBlock {...block} />
