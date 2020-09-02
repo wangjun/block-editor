@@ -1,4 +1,6 @@
 import React from 'react';
+import { DragDropContext, DropResult, Draggable, Droppable } from 'react-beautiful-dnd';
+import { IBlock } from '../interfaces';
 
 /**
  * A simple wrapper for the block editor blocks
@@ -6,14 +8,38 @@ import React from 'react';
 interface BlockEditorWrapperProps {
 	children?: JSX.Element[];
 	className?: string;
+	droppableId?: string;
+	onDragEnd?: (source: number, destination: number) => void;
 }
-export const BlockEditorWrapper = (props: BlockEditorWrapperProps) => (
-	<div
-		className={['block-editor-wrapper', props.className].join(' ')}
-	>
-		{props.children}
-	</div>
-);
+export const BlockEditorWrapper = (props: BlockEditorWrapperProps) => {
+	const dragEnd = (result: DropResult) => {
+		if (!result.destination) {
+			return;
+		}
+
+		if (result.destination.index === result.source.index) {
+			return;
+		}
+
+		props.onDragEnd && props.onDragEnd(result.source.index, result.destination.index);
+	};
+
+	return (
+		<DragDropContext onDragEnd={dragEnd}>
+			<Droppable droppableId={props.droppableId || 'block-editor'}>
+				{provided => (
+					<div
+						ref={provided.innerRef} {...provided.droppableProps}
+						className={['block-editor-wrapper', props.className].join(' ')}
+					>
+						{props.children}
+						{provided.placeholder}
+					</div>
+				)}
+			</Droppable>
+		</DragDropContext>
+	);
+};
 
 /**
  * A block wrapper
@@ -21,17 +47,26 @@ export const BlockEditorWrapper = (props: BlockEditorWrapperProps) => (
 interface BlockProps {
 	children?: JSX.Element;
 	className?: string;
-	dragHandle?: () => JSX.Element;
+	block: IBlock;
+	index: number;
+	dragHandle: JSX.Element;
 }
 export const Block = (props: BlockProps) => {
 	return (
-		<div
-			className={['block-editor-block', props.className].join(' ')}
-		>
-			{props.dragHandle && (
-				<props.dragHandle />
+		<Draggable draggableId={props.block.id} index={props.index}>
+			{provided => (
+				<div className={['block-editor-block', props.className].join(' ')}>
+					<div {...provided.dragHandleProps}>
+						{props.dragHandle}
+					</div>
+					<div
+						ref={provided.innerRef}
+						{...provided.draggableProps}
+					>
+						{props.children}
+					</div>
+				</div>
 			)}
-			{props.children}
-		</div>
+		</Draggable>
 	);
 };
