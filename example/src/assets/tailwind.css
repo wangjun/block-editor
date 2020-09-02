@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.editor-block .block-handle {
+	opacity: 0;
+}
+
+.editor-block:hover .block-handle {
+	opacity: 1;
+}
+

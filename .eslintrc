@@ -20,6 +20,14 @@
       "version": "16"
     }
 	},
+	"overrides": [{
+		"files": ["*.ts", "*.tsx"],
+		"rules": {
+			"@typescript-eslint/no-unused-vars": [2, {
+				"args": "none"
+			}]
+		}
+	}],
 	"plugins": [
 		"@typescript-eslint",
 		"react",
@@ -33,6 +41,7 @@
 		"before": true
 	},
   "rules": {
+		"react/jsx-closing-bracket-location": 0,
 		"jsx-quotes": [
 			"error",
 			"prefer-double"
@@ -67,7 +76,12 @@
 		"jsx-a11y/click-events-have-key-events": 0, // revisit
 		"react/destructuring-assignment": 0,
 		"react/prefer-stateless-function": 0,
+		"react/jsx-fragments": 0,
 		"react/jsx-indent": [
+			2,
+			"tab"
+		],
+		"react/jsx-indent-props": [
 			2,
 			"tab"
 		],
