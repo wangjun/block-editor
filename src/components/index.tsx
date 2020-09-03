@@ -51,13 +51,13 @@ interface BlockProps {
 	block: IBlock;
 	index: number;
 	dragHandle: JSX.Element;
-	onEdit: (block: IBlock) => void;
+	setEditing: (block: IBlock) => void;
 }
 export const Block = (props: BlockProps) => {
 	const toggleEditing = () => {
 		// Only toggle if not already editing
 		if (!props.block.editing) {
-			props.onEdit(props.block);
+			props.setEditing(props.block);
 		}
 	};
 

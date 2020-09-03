@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BlockEditor, {
 	useBlockEditor, BlockEditorWrapper,
 } from '@pinpt/block-editor';
@@ -7,32 +7,42 @@ import { IBlock } from '@pinpt/block-editor/dist/interfaces';
 import SimpleBlock from '../blockTypes/SimpleBlock';
 import HTMLBlock from '../blockTypes/HTMLBlock';
 
-// Data from somewhere...
-const dataPayload: IBlock[] = [
-	{
-		id: 'abc',
-		data: 'Hello world!',
-		type: 'text'
-	},
-	{
-		id: 'def',
-		data: '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus velit error voluptatum obcaecati accusantium incidunt consequatur debitis aliquid quae, corporis iusto voluptatem, suscipit voluptatibus distinctio asperiores, magni blanditiis facilis. Explicabo.</p>',
-		type: 'html'
-	},
-	{
-		id: 'ghi',
-		data: '<p>👋 Hi! This is a <strong>test</strong> message</p>',
-		type: 'html'
-	}
-];
-
 export const SimpleExample = () => {
+	// Data from somewhere...
+	const [data, setData] = useState<IBlock[]>([
+		{
+			id: 'abc',
+			data: 'Hello world!',
+			type: 'text'
+		},
+		{
+			id: 'def',
+			data: '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus velit error voluptatum obcaecati accusantium incidunt consequatur debitis aliquid quae, corporis iusto voluptatem, suscipit voluptatibus distinctio asperiores, magni blanditiis facilis. Explicabo.</p>',
+			type: 'html'
+		},
+		{
+			id: 'ghi',
+			data: '<p>👋 Hi! This is a <strong>test</strong> message</p>',
+			type: 'html'
+		}
+	]);
+
 	return (
 		<>
 			<BlockEditor.Provider
-				blocks={dataPayload}
-				onReorder={(blocks, start, end) => console.log('onReorder', blocks, start, end)}
-				onEditBlock={(block, index) => console.log('onEditBlock', block, index)}
+				blocks={data}
+				onReorder={(blocks, start, end) => {
+					console.log('onReorder', blocks, start, end);
+					setData(blocks);
+				}}
+				onSaveBlock={(blocks, block, index, data) => {
+					console.log('onSaveBlock', block, index, data);
+					setData(blocks);
+				}}
+				onEditingBlock={(blocks, block, index) => {
+					console.log('onEditingBlock', block, index);
+					setData(blocks);
+				}}
 			>
 				<Presentation />
 			</BlockEditor.Provider>

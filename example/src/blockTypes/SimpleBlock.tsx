@@ -10,19 +10,19 @@ interface SimpleBlockProps extends IBlock {
 	index: number;
 }
 export default (props: SimpleBlockProps) => {
-	const { setEditBlock } = useBlockEditor();
+	const { setEditBlock, saveBlock } = useBlockEditor();
 
 	// Handle editing
-	const onEditBlock = (block: IBlock) => {
-		setEditBlock(block.id);
+	const setEditing = () => {
+		setEditBlock(props.id, true);
 	};
 
 	const onSave = (value: string) => {
-		console.log(value);
+		saveBlock(props.id, value);
 	};
 
-	const onCancel = (value: string) => {
-		console.log(value);
+	const onCancel = () => {
+		setEditBlock(props.id, false);
 	};
 
 	return (
@@ -32,7 +32,7 @@ export default (props: SimpleBlockProps) => {
 			key={props.id}
 			block={props}
 			index={props.index}
-			onEdit={onEditBlock}
+			setEditing={setEditing}
 		>
 			<>
 				{/* Show the editor interface for this block */}
@@ -42,8 +42,9 @@ export default (props: SimpleBlockProps) => {
 						value={props.data}
 						onSave={onSave}
 						onCancel={onCancel}
-						editOnViewClick
 						editing
+						cancelOnEscape
+						cancelOnUnfocus
 					/>
 				)}
 

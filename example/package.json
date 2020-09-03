@@ -12,6 +12,9 @@
     "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^22.0.0",
+    "@ckeditor/ckeditor5-build-inline": "^22.0.0",
+    "@ckeditor/ckeditor5-react": "^2.1.0",
     "@pinpt/block-editor": "file:..",
     "@testing-library/jest-dom": "file:../node_modules/@testing-library/jest-dom",
     "@testing-library/react": "file:../node_modules/@testing-library/react",
