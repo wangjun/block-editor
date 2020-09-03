@@ -15,7 +15,7 @@ const App = () => {
 	return (
 		<div className="text-gray-900 text-xl antialiased">
 			{/* Header */}
-			<div className="px-10 py-5 flex items-center shadow fixed w-screen bg-white">
+			<div className="px-10 py-5 flex items-center shadow fixed w-screen bg-white z-50">
 				{/* Logo */}
 				<a href="/">
 					<svg width="159" height="40" viewBox="0 0 1485 373" fill="none" xmlns="http://www.w3.org/2000/svg">

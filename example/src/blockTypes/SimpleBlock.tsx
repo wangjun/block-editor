@@ -50,9 +50,9 @@ export default (props: SimpleBlockProps) => {
 
 				{/* Read mode */}
 				{!props.editing && (
-					<>
-						{props.data}
-					</>
+					<div>
+						{props.data === '' ? (<span className="text-gray-300">Your new block is here!</span>) : props.data}
+					</div>
 				)}
 			</>
 		</Block>

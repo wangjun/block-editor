@@ -18655,6 +18655,18 @@ video {
   background-color: #fff;
 }
 
+.block-wrapper .action-items {
+  display: none;
+  position: absolute;
+  bottom: -12px;
+  right: 0;
+  z-index: 100;
+}
+
+.block-wrapper:hover .action-items {
+  display: flex;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

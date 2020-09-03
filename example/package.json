@@ -23,6 +23,7 @@
     "@types/node": "file:../node_modules/@types/node",
     "@types/react": "file:../node_modules/@types/react",
     "@types/react-dom": "file:../node_modules/@types/react-dom",
+    "filestack-react": "^3.2.1",
     "react": "file:../node_modules/react",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "file:../node_modules/react-dom",

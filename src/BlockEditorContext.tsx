@@ -9,6 +9,8 @@ export interface IBlockEditorContext {
 	reorder: (startIndex: number, endIndex: number) => void;
 	setEditBlock: (id: string, editing: boolean) => void;
 	saveBlock: (id: string, data: any) => void;
+	deleteBlock: (id: string) => void;
+	addBlock: (id: string, atIndex: number) => Promise<IBlock>;
 }
 
 export const BlockEditorContext = React.createContext<any>({});
@@ -16,9 +18,12 @@ export const BlockEditorContext = React.createContext<any>({});
 export interface BlockEditorProviderProps {
 	children: React.ReactNode;
 	blocks?: IBlock[];
+	requestCreateBlock?: (index: number) => Promise<IBlock>;
 	onReorder?: (blocks: IBlock[], startIndex: number, endIndex: number) => void;
 	onSaveBlock?: (updatedBloacks: IBlock[], savedBlock: IBlock, index: number, data: any) => void;
 	onEditingBlock?: (updatedBlocks: IBlock[], block: IBlock, index: number) => void;
+	onDeleteBlock?: (updatedBlocks: IBlock[], block: IBlock, index: number) => void;
+	onAddBlock?: (updatedBlocks: IBlock[], block: IBlock, index: number) => void;
 }
 export const BlockEditorProvider = (props: BlockEditorProviderProps) => {
 	const blocks = useMemo(() => {
@@ -60,7 +65,6 @@ export const BlockEditorProvider = (props: BlockEditorProviderProps) => {
 		const { block, index } = findBlock(id);
 		block.data = data;
 		block.editing = false;
-		console.log(block);
 
 		const updatedBlocks = update(blocks, {
 			[index]: {
@@ -71,12 +75,49 @@ export const BlockEditorProvider = (props: BlockEditorProviderProps) => {
 		if (props.onSaveBlock) props.onSaveBlock(updatedBlocks, block, index, data);
 	};
 
+	// Handle deleting a block
+	const deleteBlock = (id: string) => {
+		const { block, index } = findBlock(id);
+
+		const updatedBlocks = update(blocks, {
+			$splice: [
+				[index, 1],
+			],
+		});
+
+		if (props.onDeleteBlock) props.onDeleteBlock(updatedBlocks, block, index);
+	};
+
+	// Handle adding a block
+	const addBlock = async (id: string, atIndex: number) => {
+		try {
+			const { index } = findBlock(id);
+			const block = await props.requestCreateBlock?.(index);
+			if (block) {
+				block.editing = true;
+
+				const updatedBlocks = update(blocks, {
+					$splice: [
+						[index + 1, 0],
+						[atIndex + 1, 0, block],
+					],
+				});
+
+				if (props.onAddBlock) props.onAddBlock(updatedBlocks, block, index);
+			}
+		} catch (err) {
+			throw new Error(err);
+		}
+	};
+
 	return (
 		<BlockEditorContext.Provider value={{
 			blocks,
 			reorder,
 			setEditBlock,
-			saveBlock
+			saveBlock,
+			deleteBlock,
+			addBlock
 		}}>
 			{props.children}
 		</BlockEditorContext.Provider>

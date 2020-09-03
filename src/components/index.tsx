@@ -83,6 +83,7 @@ export const Block = (props: BlockProps) => {
 						onClick={toggleEditing}
 						role="button"
 						tabIndex={-1}
+						style={{ width: '100%' }}
 					>
 						{props.children}
 					</div>
