@@ -17,7 +17,7 @@ export const BlockEditorContext = React.createContext<any>({});
 
 export interface BlockEditorProviderProps {
 	children: React.ReactNode;
-	blocks?: IBlock[];
+	blocks: IBlock[];
 	requestCreateBlock?: (index: number) => Promise<IBlock>;
 	onReorder?: (blocks: IBlock[], startIndex: number, endIndex: number) => void;
 	onSaveBlock?: (updatedBloacks: IBlock[], savedBlock: IBlock, index: number, data: any) => void;
@@ -38,17 +38,19 @@ export const BlockEditorProvider = (props: BlockEditorProviderProps) => {
 
 	// Helper to find a block by ID
 	const findBlock = (id: string) => {
-		const block = blocks.filter((b) => `${b.id}` === id)[0];
+		const block = blocks.find((b) => `${b.id}` === id);
 
 		return {
-			block: { ...block }, // make sure it's a copy in case someone set's it in React
-			index: blocks.indexOf(block),
+			block: block && { ...block }, // make sure it's a copy in case someone set's it in React
+			index: block && blocks.indexOf(block),
 		};
 	};
 
 	// Set the block to edit
 	const setEditBlock = (id: string, editing: boolean) => {
 		const { block, index } = findBlock(id);
+		if (!block || index === undefined) return;
+
 		block.editing = editing;
 
 		const updatedBlocks = update(blocks, {
@@ -63,6 +65,8 @@ export const BlockEditorProvider = (props: BlockEditorProviderProps) => {
 	// Save block
 	const saveBlock = (id: string, data: any) => {
 		const { block, index } = findBlock(id);
+		if (!block || index === undefined) return;
+
 		block.data = data;
 		block.editing = false;
 
@@ -78,6 +82,7 @@ export const BlockEditorProvider = (props: BlockEditorProviderProps) => {
 	// Handle deleting a block
 	const deleteBlock = (id: string) => {
 		const { block, index } = findBlock(id);
+		if (!block || index === undefined) return;
 
 		const updatedBlocks = update(blocks, {
 			$splice: [
@@ -92,6 +97,8 @@ export const BlockEditorProvider = (props: BlockEditorProviderProps) => {
 	const addBlock = async (id: string, atIndex: number) => {
 		try {
 			const { index } = findBlock(id);
+			if (index === undefined) return;
+
 			const block = await props.requestCreateBlock?.(index);
 			if (block) {
 				block.editing = true;
