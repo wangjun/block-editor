@@ -1,0 +1,19 @@
+name: gh-pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish-ghpages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Predeploy GH Pages
+        run: npm run predeploy
+
+      - name: Deploy GH Pages
+        run: npm run deploy
